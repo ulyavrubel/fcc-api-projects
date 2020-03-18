@@ -1,0 +1,90 @@
+/****** Main Styling ******/
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: #222;
+  background-color: #fafafa;
+  text-align: center;
+  line-height: 1.4em;
+  margin: 0;
+  padding-top: 51px;
+}
+
+nav {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #222;
+  z-index: 1;
+}
+nav ul {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+nav ul li {
+  padding: 10px;
+  margin: 0;
+}
+
+nav ul li:hover {
+  background-color: rgb(71, 71, 71);
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+}
+
+.container {
+  padding: 0;
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+.footer {
+  margin-top: 40px;
+}
+
+.user-stories {
+  position: relative;
+  text-align: justify;
+  max-width: 700px;
+  margin: 15px auto;
+}
+code {
+  font-family: monospace;
+  padding: 2px;
+  color: black;
+  background-color: #fff;
+}
+ol {
+  list-style-position: outside;
+}
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+.user-stories li {
+  margin-bottom: 1em;
+}
+
+#main-page-ul {
+  list-style-type: disc;
+}
+
+#main-page-ul li {
+  margin-bottom: 8px;
+}
+
+#main-page-ul li a {
+  color: #222;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fCC API projects</title>
+    <link href="style.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/timestamp">Timestamp</a>
+            </li>
+            <li>
+                <a href="/whoami">Request header parser</a>
+            </li>
+        </ul>
+      </nav>
+      <div class="container">
+        <h2>API Project: Request Header Parser Microservice</h2>
+        <h3>User Story: </h3>
+        1. I can get the IP address, preferred languages (from header <code>Accept-Language</code>)<br> and system infos (from header <code>User-Agent</code>) for my device.
+
+        <h3>Example Usage:</h3>
+        <p>
+          <a href="/api/whoami/check">[base url]/api/whoami/check</a>
+        </p>
+
+        <h3>Example Output:</h3>
+        <p>
+          <code>{"ipaddress":"::ffff:159.20.14.100","language":"en-US,en;q=0.5",<br>"software":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0"}</code>
+        </p>
+      </div>
+      <div class="footer">
+        <p>
+          by <a href="http://www.freecodecamp.com">freeCodeCamp</a> |  <a href="https://github.com/ulyavrubel">Ulyana Sichkar</a>  
+        </p>
+      </div>
+   
+  </body>
+</html>

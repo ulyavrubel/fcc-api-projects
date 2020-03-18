@@ -1,0 +1,25 @@
+{
+  "name": "fcc-api-projects",
+  "version": "1.0.0",
+  "description": "freeCodeCamp APIs and Microservices Projects ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ulyavrubel/fcc-api-projects.git"
+  },
+  "author": "ulyana sichkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ulyavrubel/fcc-api-projects/issues"
+  },
+  "homepage": "https://github.com/ulyavrubel/fcc-api-projects#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "ip": "^1.1.5",
+    "path": "^0.12.7"
+  }
+}

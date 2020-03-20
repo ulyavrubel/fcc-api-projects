@@ -5,12 +5,14 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const dns = require("dns");
+const url = require("url");
 
 const app = express();
 dotenv.config();
 
 app.use(cors({ optionSuccessStatus: 200 }));
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
+app.set("view engine", "pug");
 
 app.route("/").get(function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
@@ -27,6 +29,10 @@ app.route("/whoami").get(function(req, res) {
 app.route("/url-shortener").get(function(req, res) {
   res.sendFile(__dirname + "/public/url-shortener.html");
 });
+
+// app.route("/api/shorturl/:hash").get(function(req, res) {
+//   res.sendFile(__dirname + "/public/resultURL.html");
+// });
 
 //Project 1 - Timestamp Microservice - get route parameter input from the client
 app.get("/api/timestamp/:date_string?", (req, res) => {
@@ -82,14 +88,65 @@ mongoose
   });
 
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.post("/api/shorturl/new", urlencodedParser, function(req, res) {
-  console.log(req.body.url);
-  dns.lookup(req.body.url, function(err, addresses, family) {
-    console.log(err, addresses, family);
+//creating unique 8-char identifier
+const generateHash = function() {
+  const ALPHABET =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const ID_LENGTH = 8;
+  let rtn = "";
+  for (let i = 0; i < ID_LENGTH; i++) {
+    rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
+  }
+  return rtn;
+};
+
+//mongoose schema
+const Schema = mongoose.Schema;
+
+const urlObjSchema = new Schema({
+  url: { type: String, required: true },
+  hash: { type: String, required: true }
+});
+
+const UrlObj = mongoose.model("UrlObj", urlObjSchema);
+
+app.set("view engine", "pug");
+app.set("views", __dirname);
+
+app.post("/resultURL", urlencodedParser, function(req, res) {
+  let parsedUrl = url.parse(req.body.url);
+  console.log(parsedUrl);
+  dns.lookup(parsedUrl.hostname, function(err) {
+    if (err) {
+      res.json({ error: "invalid URL" });
+    } else {
+      let urlObj = { url: req.body.url, hash: generateHash() };
+      UrlObj.create(urlObj, function(err) {
+        err
+          ? res.json(err)
+          : res.sendFile(__dirname + "/public/resultURL.html");
+        // res.render(__dirname + "/public/resultURL.html", {
+        //     hash: urlObj.hash
+        //   });
+      });
+    }
   });
-  res.json({ original_url: req.body.url, short_url: "???" });
+});
+
+app.get("/api/shorturl/:hash", function(req, res) {
+  UrlObj.findOne({ hash: req.params.hash }, function(err, result) {
+    if (err) {
+      res.json(err);
+    } else {
+      let changedUrl = result.url;
+      if (result.url.slice(0, 3) === "www") {
+        changedUrl = "https://" + result.url.slice(4);
+      }
+      res.redirect(changedUrl);
+    }
+  });
 });
 
 app.listen(3000);

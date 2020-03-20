@@ -4,7 +4,8 @@
   "description": "freeCodeCamp APIs and Microservices Projects ",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "start-watch": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,10 @@
     "express": "^4.17.1",
     "ip": "^1.1.5",
     "mongoose": "^5.9.5",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }

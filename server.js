@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const dns = require("dns");
 const url = require("url");
+const shortid = require("shortid");
 
 const app = express();
 dotenv.config();
@@ -32,9 +33,9 @@ app.route("/url-shortener").get(function(req, res) {
   res.sendFile(__dirname + "/public/url-shortener.html");
 });
 
-// app.route("/api/shorturl/:hash").get(function(req, res) {
-//   res.sendFile(__dirname + "/public/resultURL.html");
-// });
+app.route("/exercise-tracker").get(function(req, res) {
+  res.sendFile(__dirname + "/public/exerciseTracker.html");
+});
 
 //Project 1 - Timestamp Microservice - get route parameter input from the client
 app.get("/api/timestamp/:date_string?", (req, res) => {
@@ -146,6 +147,62 @@ app.get("/api/shorturl/:hash", function(req, res) {
         changedUrl = "https://" + result.url.slice(4);
       }
       res.redirect(changedUrl);
+    }
+  });
+});
+
+//project 4 Exercise tracker
+
+const userSchema = new Schema({
+  _id: { type: String, default: shortid.generate },
+  userName: { type: String, required: true },
+  count: { type: Number },
+  log: [
+    {
+      description: String,
+      duration: Number,
+      date: Date
+    }
+  ]
+});
+
+const User = mongoose.model("User", userSchema);
+
+app.post("/api/exercise/new-user", urlencodedParser, function(req, res) {
+  User.create({ userName: req.body.username, count: 0, log: [] }, function(
+    err,
+    result
+  ) {
+    err
+      ? res.json(err)
+      : res.json({ username: req.body.username, _id: result._id });
+  });
+});
+
+app.post("/api/exercise/add", urlencodedParser, function(req, res) {
+  User.findById({ _id: req.body.userId }, function(err, result) {
+    if (err) {
+      res.json(err);
+    } else {
+      result.count = result.count + 1;
+      let resDate;
+      req.body.date
+        ? (resDate = new Date(req.body.date))
+        : (resDate = new Date()); //bug without date!!!!!!!!!!!!!!1
+      result.log.push({
+        description: req.body.description,
+        duration: Number(req.body.duration),
+        date: resDate
+      });
+      result.save(function(err, result) {
+        err
+          ? res.json(err)
+          : res.json({
+              username: result.userName,
+              count: result.count,
+              log: result.log
+            });
+      });
     }
   });
 });

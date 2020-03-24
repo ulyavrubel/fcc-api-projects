@@ -12,6 +12,8 @@ dotenv.config();
 
 app.use(cors({ optionSuccessStatus: 200 }));
 app.use(express.static(__dirname + "/public"));
+
+app.set("views", __dirname + "/views");
 app.set("view engine", "pug");
 
 app.route("/").get(function(req, res) {
@@ -112,12 +114,8 @@ const urlObjSchema = new Schema({
 
 const UrlObj = mongoose.model("UrlObj", urlObjSchema);
 
-app.set("view engine", "pug");
-app.set("views", __dirname);
-
 app.post("/resultURL", urlencodedParser, function(req, res) {
   let parsedUrl = url.parse(req.body.url);
-  console.log(parsedUrl);
   dns.lookup(parsedUrl.hostname, function(err) {
     if (err) {
       res.json({ error: "invalid URL" });
@@ -126,13 +124,16 @@ app.post("/resultURL", urlencodedParser, function(req, res) {
       UrlObj.create(urlObj, function(err) {
         err
           ? res.json(err)
-          : res.sendFile(__dirname + "/public/resultURL.html");
-        // res.render(__dirname + "/public/resultURL.html", {
-        //     hash: urlObj.hash
-        //   });
+          : res.render("resultURL", {
+              link: `${req.headers.origin}/api/shorturl/${urlObj.hash}`
+            });
       });
     }
   });
+});
+
+app.get("/resultURL", (req, res) => {
+  res.render("resultURL");
 });
 
 app.get("/api/shorturl/:hash", function(req, res) {

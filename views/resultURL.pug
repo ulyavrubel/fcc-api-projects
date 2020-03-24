@@ -1,0 +1,35 @@
+doctype html
+html
+    head
+        style
+            include style.css
+        title Short Link
+        script
+            include script.js
+    body
+        nav
+            ul
+                li
+                    a(href='/') Home
+                li
+                    a(href='/timestamp') Timestamp
+                li
+                    a(href='/whoami') Request Header Parser
+                li
+                    a(href='/url-shortener') URL Shortener
+
+        h1 Your link
+        - var url = link
+        
+        input(
+            type="text"
+            value=url
+            id="url"            
+        )
+        button(
+            type="button"
+            onClick="copy()"
+        ) Copy
+
+
+

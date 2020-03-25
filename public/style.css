@@ -93,3 +93,41 @@ li {
 #url_input {
   width: 250px;
 }
+
+#exersise-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#exersise-form input {
+  margin-bottom: 4px;
+}
+
+@media (min-width: 900px) {
+  #exersise-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+  }
+
+  #exersise-stories {
+    width: 45vw;
+    padding-right: 50px;
+    margin: 0;
+  }
+
+  #exersise-stories h3 {
+    text-align: center;
+  }
+
+  .form-container {
+    width: 45vw;
+    padding-left: 50px;
+    margin: 0;
+    text-align: left;
+  }
+  #exersise-form {
+    align-items: flex-start;
+  }
+}

@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const dns = require("dns");
 const url = require("url");
 const shortid = require("shortid");
+const multer = require("multer");
 
 const app = express();
 dotenv.config();
@@ -35,6 +36,10 @@ app.route("/url-shortener").get(function(req, res) {
 
 app.route("/exercise-tracker").get(function(req, res) {
   res.sendFile(__dirname + "/public/exerciseTracker.html");
+});
+
+app.route("/file-metadata").get(function(req, res) {
+  res.sendFile(__dirname + "/public/fileMetadata.html");
 });
 
 //Project 1 - Timestamp Microservice - get route parameter input from the client
@@ -93,11 +98,11 @@ mongoose
 // create application/x-www-form-urlencoded parser
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-//creating unique 8-char identifier
+//creating unique 6-char identifier
 const generateHash = function() {
   const ALPHABET =
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const ID_LENGTH = 8;
+  const ID_LENGTH = 6;
   let rtn = "";
   for (let i = 0; i < ID_LENGTH; i++) {
     rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
@@ -126,7 +131,8 @@ app.post("/resultURL", urlencodedParser, function(req, res) {
         err
           ? res.json(err)
           : res.render("resultURL", {
-              link: `${req.headers.origin}/api/shorturl/${urlObj.hash}`
+              // link: `${req.headers.origin}/api/shorturl/${urlObj.hash}`
+              link: `${req.headers.origin}/sh/${urlObj.hash}`
             });
       });
     }
@@ -137,7 +143,7 @@ app.get("/resultURL", (req, res) => {
   res.render("resultURL");
 });
 
-app.get("/api/shorturl/:hash", function(req, res) {
+app.get("/sh/:hash", function(req, res) {
   UrlObj.findOne({ hash: req.params.hash }, function(err, result) {
     if (err) {
       res.json(err);
@@ -161,13 +167,14 @@ const userSchema = new Schema({
     {
       description: String,
       duration: Number,
-      date: Date
+      date: { type: Date, default: Date.now }
     }
   ]
 });
 
 const User = mongoose.model("User", userSchema);
 
+//create a user by posting form data username to /api/exercise/new-user and returned will be an object with username and _id
 app.post("/api/exercise/new-user", urlencodedParser, function(req, res) {
   User.create({ userName: req.body.username, count: 0, log: [] }, function(
     err,
@@ -179,20 +186,21 @@ app.post("/api/exercise/new-user", urlencodedParser, function(req, res) {
   });
 });
 
+//add an exercise to any user by posting form data userId(_id), description, duration, and optionally date to /api/exercise/add
 app.post("/api/exercise/add", urlencodedParser, function(req, res) {
   User.findById({ _id: req.body.userId }, function(err, result) {
     if (err) {
       res.json(err);
     } else {
       result.count = result.count + 1;
-      let resDate;
+      let setDate;
       req.body.date
-        ? (resDate = new Date(req.body.date))
-        : (resDate = new Date()); //bug without date!!!!!!!!!!!!!!1
+        ? (setDate = new Date(req.body.date))
+        : (setDate = undefined);
       result.log.push({
         description: req.body.description,
         duration: Number(req.body.duration),
-        date: resDate
+        date: setDate
       });
       result.save(function(err, result) {
         err
@@ -204,6 +212,57 @@ app.post("/api/exercise/add", urlencodedParser, function(req, res) {
             });
       });
     }
+  });
+});
+
+//get an array of all users by getting api/exercise/users with the same info as when creating a user
+app.get("/api/exercise/users", function(req, res) {
+  User.find({}, function(err, result) {
+    if (err) {
+      res.json(err);
+    } else {
+      let results = result.map(item => {
+        return {
+          username: item.userName,
+          _id: item._id
+        };
+      });
+      res.json(results);
+    }
+  });
+});
+
+//retrieve a full exercise log of any user by getting /api/exercise/log with a parameter of userId(_id)
+app.get("/api/exercise/log/:userId/:from?/:to?/:limit?", function(req, res) {
+  User.findById({ _id: req.params.userId }, function(err, result) {
+    if (err) {
+      res.json(err);
+    } else {
+      let results = result.log.filter(item => {
+        let targetD = new Date(item.date);
+        let fromD;
+        req.params.from ? (fromD = new Date(req.params.from)) : (fromD = 0);
+        let toD;
+        req.params.to ? (toD = new Date(req.params.to)) : (toD = Infinity);
+        return targetD >= fromD && targetD <= toD;
+      });
+      if (req.params.limit) {
+        results.splice(req.params.limit);
+      }
+      res.json(results);
+    }
+  });
+});
+
+//project 5 file metadata
+
+const upload = multer();
+
+app.post("/api/fileanalyse", upload.single("upfile"), function(req, res) {
+  res.json({
+    name: req.file.originalname,
+    type: req.file.mimetype,
+    size: req.file.size
   });
 });
 

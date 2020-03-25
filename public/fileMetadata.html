@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exercise Tracker | Free Code Camp</title>
+    <link
+      rel="shortcut icon"
+      href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/timestamp">Timestamp</a>
+        </li>
+        <li>
+          <a href="/whoami">Request Header Parser</a>
+        </li>
+        <li>
+          <a href="/url-shortener">URL Shortener</a>
+        </li>
+        <li>
+          <a href="/exercise-tracker">Exercise Tracker</a>
+        </li>
+        <li>
+          <a href="/file-metadata">File Metadata</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container">
+      <h2>API Project: File Metadata Microservice</h2>
+      <h3>User Stories:</h3>
+      <div class="user-stories">
+        <ol>
+          <li>To submit a form object that includes a file upload.</li>
+          <li>
+            The from file input field has the "name" attribute set to "upfile".
+          </li>
+          <li>
+            On submit something, will receive the file name, and size in bytes
+            within the JSON response.
+          </li>
+        </ol>
+      </div>
+
+      <h3>Usage:</h3>
+      <p>
+        Please Upload a File ...
+      </p>
+      <div class="view">
+        <h4 id="output"></h4>
+        <form
+          enctype="multipart/form-data"
+          method="POST"
+          action="/api/fileanalyse"
+        >
+          <input id="inputfield" type="file" name="upfile" />
+          <input id="button" type="submit" value="Upload" />
+        </form>
+      </div>
+    </div>
+    <div class="footer">
+      <p>
+        by <a href="http://www.freecodecamp.com">freeCodeCamp</a> |
+        <a href="https://github.com/ulyavrubel">Ulyana Sichkar</a>
+      </p>
+    </div>
+  </body>
+</html>

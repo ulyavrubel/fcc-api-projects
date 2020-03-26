@@ -8,6 +8,7 @@ const dns = require("dns");
 const url = require("url");
 const shortid = require("shortid");
 const multer = require("multer");
+const port = process.env.PORT || 8080;
 
 const app = express();
 dotenv.config();
@@ -266,4 +267,6 @@ app.post("/api/fileanalyse", upload.single("upfile"), function(req, res) {
   });
 });
 
-app.listen(3000);
+app.listen(port, function() {
+  console.log("app running on port 8080");
+});

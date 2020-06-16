@@ -12,7 +12,7 @@
             <li>
                 <a href="/">Home</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="/timestamp">Timestamp</a>
             </li>
             <li>
@@ -35,7 +35,7 @@
         <ol class="user-stories">
           <li>
             The API endpoint is
-            <code>GET [project_url]/api/timestamp/:date_string?</code>
+            <code>GET [project_url]/api/timestamp/<br  class="mobile"/>:date_string?</code>
           </li>
           <li>
             A date string is valid if can be successfully parsed by
@@ -43,7 +43,7 @@
             Note that the unix timestamp needs to be an
             <strong>integer</strong> (not a string) specifying
             <strong>milliseconds</strong>.<br />
-            In our test we will use date strings compliant with ISO-8601 (e.g.
+            The test will use date strings compliant with ISO-8601 (e.g.
             <code>"2016-11-20"</code>) because this will ensure an UTC timestamp.
           </li>
           <li>
@@ -94,7 +94,7 @@
             <a
               href="/api/timestamp/1450137600000000000"
               ><code
-                >GET [project url]/api/timestamp/14501376000000000000</code
+                >GET [project url]/api/timestamp/<br class="mobile"/>14501376000000000000</code
               ></a
             >
           </li>

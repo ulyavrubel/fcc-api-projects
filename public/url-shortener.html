@@ -18,7 +18,7 @@
           <li>
               <a href="/whoami">Request Header Parser</a>
           </li>
-          <li>
+          <li class="active">
               <a href="/url-shortener">URL Shortener</a>
           </li>
           <li>
@@ -33,8 +33,8 @@
         <h2>API Project: URL Shortener Microservice</h2>
         <h3>User Stories: </h3>
         <ol class="user-stories">
-          <li>POST a URL to <code>[project_url]/api/shorturl/new</code> and receive a shortened URL in the JSON response.<br>Example : <code>{"original_url":"www.google.com","short_url":1}</code></li>
-          <li>Passing an invalid URL that doesn't follow the <code>http(s)://www.example.com(/more/routes)</code> format, the JSON response will contain an error like <code>{"error":"invalid URL"}</code><br>
+          <li>POST a URL to <code>[project_url]/api/shorturl/new</code> and receive a shortened URL which could be copied</li>
+          <li>Passing an invalid URL that doesn't follow the <code>http(s)://www.example.com<br  class="mobile"/>(/more/routes)</code> format, the JSON response will contain an error like <code>{"error":"invalid URL"}</code><br>
           </li>
           <li>When visiting the shortened URL, it will redirect to the original link.</li>
         </ol>

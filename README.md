@@ -30,4 +30,13 @@ Technologies I used for this project:
 
 ## Features
 ### Timestamp Microservice
-Timestamp Microservice parses timestamp in milliseconds or date string from the API endpoint and returns a JSON having a structure {"unix": <date.getTime()>, "utc" : <date.toUTCString()> }
+Timestamp Microservice parses timestamp in milliseconds or date string from the API endpoint and returns a JSON having a structure {"unix": <date.getTime()>, "utc" : <date.toUTCString()> }, if date string is invalid returns {"unix": null, "utc" : "Invalid Date" }
+
+### Request Header Parser Microservice
+Request Header Parser Microservice gets the IP address, preferred languages and system infos of the client's device.
+
+### URL Shortener Microservice
+URL Shortener Microservice allows to post url and receive a shortened URL which could be copied. Visiting the shortened URL will redirect to the original link.
+
+### Exercise Tracker Microservice
+Exercise Tracker Microservice 

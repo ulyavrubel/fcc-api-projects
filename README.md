@@ -1,12 +1,11 @@
 # fcc-api-projects
-RESTful API built with MongoDB, Node.js, and Express for [freeCodeCamp](www.freeCodeCamp.com) APIs and Microservices Certification.
+RESTful API built with MongoDB, Node.js, and Express for [freeCodeCamp](https://www.freecodecamp.org/learn) APIs and Microservices Certification.
 
 ## Table of Contents
 * [Introduction](#introduction)
 * [Demos](#demos)
 * [Technologies](#technologies)
 * [Features](#features)
-* [To-do](#to-do)
 
 ## Introduction
 This project is a result of my learning the backend basics with freeCodeCamp APIs and Microservices, which includes the following sections: 
@@ -33,10 +32,13 @@ Technologies I used for this project:
 Timestamp Microservice parses timestamp in milliseconds or date string from the API endpoint and returns a JSON having a structure {"unix": <date.getTime()>, "utc" : <date.toUTCString()> }, if date string is invalid returns {"unix": null, "utc" : "Invalid Date" }
 
 ### Request Header Parser Microservice
-Request Header Parser Microservice gets the IP address, preferred languages and system infos of the client's device.
+Request Header Parser Microservice gets the IP address, preferred languages, and system info of the client's device.
 
 ### URL Shortener Microservice
 URL Shortener Microservice allows to post url and receive a shortened URL which could be copied. Visiting the shortened URL will redirect to the original link.
 
 ### Exercise Tracker Microservice
-Exercise Tracker Microservice 
+Exercise Tracker Microservice allows to create user, to add an exercise to any user, to get user's exercise log optionally for selected period.
+
+### File Metadata Microservice
+File Metadata Microservice allows to submit a form object that includes a file upload, on submit receive JSON with file's name, type and size.

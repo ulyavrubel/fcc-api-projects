@@ -29,7 +29,7 @@ Technologies I used for this project:
 
 ## Features
 ### Timestamp Microservice
-Timestamp Microservice parses timestamp in milliseconds or date string from the API endpoint and returns a JSON having a structure {"unix": <date.getTime()>, "utc" : <date.toUTCString()> }, if date string is invalid returns {"unix": null, "utc" : "Invalid Date" }
+Timestamp Microservice parses timestamp in milliseconds or date string from the API endpoint and returns returns a JSON with timestamp and date.
 
 ### Request Header Parser Microservice
 Request Header Parser Microservice gets the IP address, preferred languages, and system info of the client's device.
